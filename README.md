@@ -1,4 +1,4 @@
 # Day Day Up
 
 This is my collects...
-I'm gald if these good for you!
+I'm glad if these good for you!
