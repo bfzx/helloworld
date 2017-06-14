@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="main">
+<head>
+  <title></title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/2.1.0/toaster.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js" ></script>
+  <script src="http://code.angularjs.org/1.4.2/angular-animate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/2.1.0/toaster.js"></script>
+    
+</head>
+    <body>
+    
+        <div>
+            <div ng-controller="myController">
+            <!-- NOTE: remove 'animation-class': 'toast-top-center' if you want it on the left top corner --> 
+                <toaster-container toaster-options="{'close-button':false, 'time-out':{ 'toast-warning': 2000, 'toast-error': 0 } }"></toaster-container>
+                <button class="btn btn-primary" style="margin: 150px 0 0 150px;" ng-click="pop()">Show toasts</button>
+                <br />
+                <button class="btn btn-danger" style="margin: 10px 0 0 150px;" ng-click="clear()">Clear toasts</button>
+            </div>
+        </div>
+        
+        <script type="text/ng-template" id="toasterBodyTmpl.html">
+          <p>Render a default template!</p>
+        </script>
+        
+        <script type="text/ng-template" id="myTemplate.html">
+          <p>Render a custom template! {{bar}}</p>
+        </script>
+        
+        <script type="text/ng-template" id="myTemplateWithData.html">
+          <p>Here it is! {{toaster.data}}</p>
+        </script>
+        
+    </body>
+	<script>
+		angular.module('main', ['ngAnimate', 'toaster'])
+
+		.controller('myController', function($scope, toaster, $window) {
+			
+			$scope.bar = 'Hi';
+			
+			$scope.pop = function(){
+				toaster.success({title: "title", body:"text1"});
+				toaster.error("title", "text2");
+				toaster.pop({type: 'wait', title: "title", body:"text"});
+				toaster.pop('success', "title", '<ul><li>Render html</li></ul>', 5000, 'trustedHtml');
+				toaster.pop('error', "title", '<ul><li>Render html</li></ul>', null, 'trustedHtml');
+				toaster.pop('wait', "title", null, null, 'template');
+				toaster.pop('warning', "title", "myTemplate.html", null, 'template');
+				toaster.pop('note', "title", "text");
+				toaster.pop('success', "title", 'Its address is https://google.com.', 5000, 'trustedHtml', function(toaster) {
+					var match = toaster.body.match(/http[s]?:\/\/[^\s]+/);
+					if (match) $window.open(match[0]);
+					return true;
+				});
+				toaster.pop('warning', "Hi ", "{template: 'myTemplateWithData.html', data: 'MyData'}", 15000, 'templateWithData');
+				toaster.pop('warning', "title", 'Bill');
+			};
+			
+			$scope.goToLink = function(toaster) {
+			  var match = toaster.body.match(/http[s]?:\/\/[^\s]+/);
+			  if (match) $window.open(match[0]);
+			  return true;
+			};
+			
+			$scope.clear = function(){
+				toaster.clear();
+			};
+		});
+	</script>
+</html>
