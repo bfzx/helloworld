@@ -10,13 +10,7 @@
 
 <script type="text/javascript">
 
-   window.onbeforeunload= onunload_message;   
-
-     function onunload_message(){   
-
-        alert("您确定离开该网页吗？");  
-
-    }   
+window.onbeforeunload= function(event) { return confirm("确定离开此页面吗？"); }
 
 </script>   
 
