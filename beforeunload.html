@@ -10,25 +10,10 @@
 
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
-    pushHistory(); 
-    window.addEventListener("popstate", function(e) { 
-        alert("我监听到了浏览器的返回按钮事件啦");//根据自己的需求实现自己的功能
-        var ua = navigator.userAgent.toLowerCase(); 
-            if(ua.match(/MicroMessenger/i)=="micromessenger") { 
-                WeixinJSBridge.call('closeWindow'); //微信
-            } else{ 
-                window.close(); //普通浏览器
-            }
-        }, false);
-        function pushHistory() { 
-            var state = { 
-                title: "title", 
-                url: "#"
-            }; 
-            window.history.pushState(state, "title", "#"); 
-    }
-});
+
+window.onbeforeunload= function(event) { return confirm("确定离开此页面吗？before"); }
+
+window.onunload = function(event) { return confirm("确定离开此页面吗？"); }
 </script>   
 
 </head>
