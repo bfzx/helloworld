@@ -26,11 +26,32 @@
 			background-position-x: right;
 		}
 	}
+	
+	.gradient-text {
+		background-image: linear-gradient(90deg, red, orange);
+		background-clip: text;
+		line-height: 60px;
+		font-size: 60px;
+		animation: hue 5s linear infinite;
+		-webkit-text-fill-color: transparent;
+	}
+	@keyframes hue {
+		from {
+			filter: hue-rotate(0);
+		}
+		to {
+			filter: hue-rotate(-1turn);
+		}
+	}
   </style>
   <body>
 
     <div class="bruce">
 		<div class="gradient-bg">青青子衿，悠悠我心</div>
+	</div>
+	
+	<div class="bruce flex-ct-x">
+		<h1 class="gradient-text">何以解忧唯有杜康</h1>
 	</div>
 
   </body>
